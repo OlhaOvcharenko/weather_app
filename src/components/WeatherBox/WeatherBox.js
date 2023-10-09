@@ -5,36 +5,64 @@ import { useCallback, useState } from 'react';
 
 const WeatherBox = props => {
   
-  const [cities, setCity] = useState('');
+  const [weatherData, setWeatherData] = useState([]);
   
-  const handleCityChange  = useCallback((city) => {
+  /*const handleCityChange  = useCallback((city) => {
 
     fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=ca9f78996c6959904da5213ccf2b8f95&units=metric`)
    .then(res => res.json())
    .then(data => {
-     console.log(data);
+     
+     const weatherData = {
+      city: data.name,
+      temp: data.main.temp,
+      icon: data.weather[0].icon,
+      description: data.weather[0].main
+    };
+
+    console.log(weatherData); 
    });
+
+  
 
     if (city) {
       setCity(city);
       console.log('city', city);
     }
+  }, []);*/
+
+  const handleCityChange = useCallback((city) => {
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=ca9f78996c6959904da5213ccf2b8f95&units=metric`)
+      .then(res => res.json())
+      .then(data => {
+        const weatherData = {
+          city: data.name,
+          temp: data.main.temp,
+          icon: data.weather[0].icon,
+          description: data.weather[0].main
+        };
+
+        // Use the previous weatherData and add the new data to it
+        setWeatherData([weatherData]);
+        console.log('WeatherData', weatherData);
+      });
+
+    if (city) {
+      // You can remove this part as it's not needed
+      console.log('city', city);
+    }
   }, []);
-
-
-  const weatherData = {
-    city: data.name,
-    temp: data.main.temp,
-    icon: data.weather[0].icon,
-    description: data.weather[0].main
-  };
-
 
  
   return (
     <section>
       <PickCity action={handleCityChange}/>
-      <WeatherSummary />
+      <WeatherSummary  
+         city={weatherData[0]?.city} 
+         temp={weatherData[0]?.temp}
+         icon={weatherData[0]?.icon}
+         description={weatherData[0]?.description}
+       />
       <Loader />
     </section>
   )
