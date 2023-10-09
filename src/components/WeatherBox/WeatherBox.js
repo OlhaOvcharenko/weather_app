@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 
 const WeatherBox = props => {
   
-  const [weatherData, setWeatherData] = useState([]);
+  const [weatherData, setWeatherData] = useState('');
   
   /*const handleCityChange  = useCallback((city) => {
 
@@ -42,15 +42,11 @@ const WeatherBox = props => {
           description: data.weather[0].main
         };
 
-        // Use the previous weatherData and add the new data to it
-        setWeatherData([weatherData]);
+        setWeatherData(weatherData);
         console.log('WeatherData', weatherData);
-      });
 
-    if (city) {
-      // You can remove this part as it's not needed
-      console.log('city', city);
-    }
+
+      });
   }, []);
 
  
@@ -58,10 +54,10 @@ const WeatherBox = props => {
     <section>
       <PickCity action={handleCityChange}/>
       <WeatherSummary  
-         city={weatherData[0]?.city} 
-         temp={weatherData[0]?.temp}
-         icon={weatherData[0]?.icon}
-         description={weatherData[0]?.description}
+         city={weatherData.city} 
+         temp={weatherData.temp}
+         icon={weatherData.icon}
+         description={weatherData.description}
        />
       <Loader />
     </section>
