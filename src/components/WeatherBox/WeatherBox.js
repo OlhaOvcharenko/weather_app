@@ -4,7 +4,7 @@ import Loader from '../Loader/Loader';
 import { useCallback, useState } from 'react';
 import ErrorBox from '../ErrorBox/ErrorBox';
 
-const WeatherBox = props => {
+const WeatherBox = () => {
   
   const [weatherData, setWeatherData] = useState('');
   const [pending, setPending] = useState(false);
